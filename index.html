@@ -473,12 +473,12 @@ testset = torch.load(TESTSET_FILE, weights_only=True)
 <p>You can learn the basic idea and principle from <a href="https://files.sri.inf.ethz.ch/website/teaching/riai2020/materials/lectures/LECTURE3_ATTACKS.pdf">link</a>.</p>
 <p>It's quite similar to FSGM, just in an iterative way. </p>
 <h2 id="submission">Submission</h2>
-<p>You need to store all your adversarial samples into a list. Therefore, the finally submitted object should be <code>List[torch.tensor]</code> with <span class="arithmatex"><span class="MathJax_Preview">\text{length}=100</span><script type="math/tex">\text{length}=100</script></span>, containing 100 adversarial images (the order should keep the same as the <code>testset</code>). Each tensor has the size of <span class="arithmatex"><span class="MathJax_Preview">3\times 32\times 32</span><script type="math/tex">3\times 32\times 32</script></span>. Persist this list using <code>torch.save(adv_imgs, SAVE_FILE)</code>. </p>
-<p>Submit your file at <a href="https://ucr-cs255-25fall-lab4.tch.gdjs2.cn"><strong>SUBMISSION SITE</strong></a>. Your result would be <strong>AUTO-GRADED</strong>. Therefore, if you submit an incorrect file, you would receive low or zero grades. Double check your file before submitting and you can also write your self-check script to test your result. </p>
+<p>You need to store all your adversarial samples into a list. Therefore, the finally submitted object should be <code>List[torch.tensor]</code> with <span class="arithmatex"><span class="MathJax_Preview">\text{length}=100</span><script type="math/tex">\text{length}=100</script></span>, containing 100 adversarial images (the order should keep the same as the <code>testset</code>). Each tensor has the size of <span class="arithmatex"><span class="MathJax_Preview">3\times 32\times 32</span><script type="math/tex">3\times 32\times 32</script></span>. Persist this list using <code>torch.save(adv_imgs, SAVE_FILE)</code>. <strong>You should name the file <code>fgsm.pt</code> or <code>pgd.pt</code></strong>.</p>
+<p>Submit your file at <strong>Gradescope</strong>. Your result would be <strong>AUTO-GRADED</strong>. Therefore, if you submit an incorrect file, you would receive low or zero grades. Double check your file before submitting and you can also write your self-check script to test your result. </p>
 <h2 id="grade-policy">Grade Policy</h2>
 <p>Our test meets several guidelines:</p>
 <ol>
-<li>Less <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, higher grade. If you make less perturbation to the original image, you would receive a higher grade. If you increase your <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, your modification will then be easier to see. Your grade will drop exponentially with <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>.</li>
+<li>Less <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, higher grade. If you make less perturbation to the original image, you would receive a higher grade. If you increase your <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, your modification will then be easier to see.</li>
 <li>Higher predicted difference, higher grade. If you acheive a higher mis-prediction rate on your adversarial samples, you would receive a higher grade. Your grade will increase linearly with the mis-prediction rate.</li>
 </ol>
 <p>Specifically, we would calculate three values for your ddversarial sampls:</p>
@@ -495,31 +495,29 @@ testset = torch.load(TESTSET_FILE, weights_only=True)
 <p>For FGSM, you will get the score according the maximum grade you get. </p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
-\text{TP1 Score} = 0.33 + 33\times \text{tp1-accuracy-diff} - e^{33\times eps}\\
-\text{TP5 Score} = 66\times \text{tp5-accuracy-diff} - e^{33\times eps}\\
+\text{TP1 Score} = 0.33 + 33\times \text{tp1-accuracy-diff}\\
+\text{TP5 Score} = 66\times \text{tp5-accuracy-diff}\\
 \text{Final Score} = \text{min}(\text{max}(\text{max}(\text{TP1 Score}, \text{TP5 Score}), 0), 10)
 </div>
 <script type="math/tex; mode=display">
-\text{TP1 Score} = 0.33 + 33\times \text{tp1-accuracy-diff} - e^{33\times eps}\\
-\text{TP5 Score} = 66\times \text{tp5-accuracy-diff} - e^{33\times eps}\\
+\text{TP1 Score} = 0.33 + 33\times \text{tp1-accuracy-diff}\\
+\text{TP5 Score} = 66\times \text{tp5-accuracy-diff}\\
 \text{Final Score} = \text{min}(\text{max}(\text{max}(\text{TP1 Score}, \text{TP5 Score}), 0), 10)
 </script>
 </div>
-<p>For PGD, you will get the score according to the minimum grade you get.</p>
+<p>For PGD, you will get the score according to the maximum grade you get.</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
-\text{TP1 Score} = 26\times \text{tp1-accuracy-diff} - e^{66\times eps}\\
-\text{TP5 Score} = 46\times \text{tp5-accuracy-diff} - e^{66\times eps}\\
+\text{TP1 Score} = 26\times \text{tp1-accuracy-diff}\\
+\text{TP5 Score} = 46\times \text{tp5-accuracy-diff}\\
 \text{Final Score} = 0.2\times \text{min}(\text{max}(\text{min}(\text{TP1 Score}, \text{TP5 Score}), 0), 10)
 </div>
 <script type="math/tex; mode=display">
-\text{TP1 Score} = 26\times \text{tp1-accuracy-diff} - e^{66\times eps}\\
-\text{TP5 Score} = 46\times \text{tp5-accuracy-diff} - e^{66\times eps}\\
+\text{TP1 Score} = 26\times \text{tp1-accuracy-diff}\\
+\text{TP5 Score} = 46\times \text{tp5-accuracy-diff}\\
 \text{Final Score} = 0.2\times \text{min}(\text{max}(\text{min}(\text{TP1 Score}, \text{TP5 Score}), 0), 10)
 </script>
 </div>
-<p>PGD algorithm is more powerful and you can see it's more strict to <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>. </p>
-<p>You can submit for FGSM for <strong>10 TIMES</strong> amd <strong>3 TIMES</strong> for PGD. Test by yourself before submitting.</p>
 <h2 id="questions">Questions</h2>
 <p>Contacting me via <a href="mailto:zwang712@ucr.edu">email</a> if you have any question. Attach your email, name and corresponding submission id. </p>
 <p><strong>BONUS:</strong> Because this is a security course and you have learned about web security. If you can find any vulnerabilty in the submission website (this tutorial is a purely static website), we can give you some bonus for the lab :). </p>
