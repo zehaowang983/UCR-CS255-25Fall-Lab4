@@ -481,7 +481,7 @@ testset = torch.load(TESTSET_FILE, weights_only=True)
 <li>Less <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, higher grade. If you make less perturbation to the original image, you would receive a higher grade. If you increase your <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, your modification will then be easier to see.</li>
 <li>Higher predicted difference, higher grade. If you acheive a higher mis-prediction rate on your adversarial samples, you would receive a higher grade. Your grade will increase linearly with the mis-prediction rate.</li>
 </ol>
-<p>Specifically, we would calculate three values for your ddversarial sampls:</p>
+<p>Specifically, we would calculate three values for your adversarial samples:</p>
 <ol>
 <li><span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>, which is the average difference between your submitted samples and original images (unit in pixel). In FGSM, this <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span> shoud be the same as your <code>eps</code>. In PGD, <span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span> should be lower than <code>eps</code> you set in the algorithm as <code>eps</code> is the upperbound. </li>
 <li><code>tp1-accuracy-diff</code>: </li>
